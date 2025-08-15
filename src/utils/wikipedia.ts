@@ -1,6 +1,11 @@
 // cache the wikipedia data, let's assume the data is static
 const wikipediaCache: Map<string, string> = new Map<string, string>();
 
+/*
+* @description - get wikipedia data
+* @param city - string - city name
+* @returns - Promise<string> - get city description
+*/
 export const getWikipediaData = async (city: string): Promise<string> => {
     try {
         if(wikipediaCache.has(city.toLocaleLowerCase())) {

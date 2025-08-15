@@ -5,6 +5,12 @@ type SchemaMap = {
     [key: string]: ZodType<any>;
 }
 
+/*
+* @description - middleware to validate request body
+* @param schema - Zod schema
+* @returns - middleware
+* throws error if validation fails
+*/
 export const validate = (schema: SchemaMap) => {
     const keys = Object.keys(schema);
     return (req: Request, res: Response, next: NextFunction) => {

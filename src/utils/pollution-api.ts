@@ -28,6 +28,11 @@ const authenticatedUser: AuthenticatedUserToken = {
     refreshToken: ''
 };
 
+/*
+* @description - authenticate user and return token
+* @param input - UserCredential
+* @returns - Promise<AuthenticatedUserToken | AuthenticationError> - user token or error
+*/
 export const authenticateUser = async (input: UserCredential): Promise<AuthenticatedUserToken | AuthenticationError> => {
     const {  username, password } = input;
     const response = await fetch(`${apiBase}/auth/login`, {
@@ -46,6 +51,11 @@ export const authenticateUser = async (input: UserCredential): Promise<Authentic
     return token;    
 }
 
+/*
+* @description - refresh token
+* @param refreshToken - string
+* @returns - Promise<RefreshedToken | AuthenticationError> - refreshed token or error
+*/
 export const refreshToken = async (refreshToken: string): Promise<RefreshedToken | AuthenticationError> => {
     const response = await fetch(`${apiBase}/auth/refresh`, {
         method: 'POST',
@@ -63,6 +73,14 @@ export const refreshToken = async (refreshToken: string): Promise<RefreshedToken
     return token;
 }
 
+/*
+* @description - get pollution data
+* @param country - string - e.g. IN
+* @param page - number - default 1
+* @param limit - number - default 10
+* @param tryCount - number  
+* @returns - Promise<PollutionData> - pollution data
+*/
 export const getPollutionData = async (country: string, page: number = 1, limit: number = 10, tryCount: number = 0): Promise<PollutionData> => {
     // check if user is autheticate
     if(!authenticatedUser.token) {

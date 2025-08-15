@@ -2,6 +2,11 @@ import { type CountryPollutionData, type EnrichedPollutionData, type CountryPoll
 import { getWikipediaData } from "./wikipedia.js";
 import * as countryList from 'country-list';
 
+/*
+* @description - clean pollution data
+* @param data - pollution data
+* @returns - CountryPollutionData - cleaned pollution data 
+*/
 export const cleanPollutionData = (data: CountryPollutionData): CountryPollutionData => {
     // first trim and case transform city names
     data.cities = data.cities.map((city) => {
@@ -21,6 +26,11 @@ export const cleanPollutionData = (data: CountryPollutionData): CountryPollution
     return data;
 }
 
+/*
+* @description - enrich pollution data
+* @param data - CountryPollutionData - pollution data
+* @returns - Promise<EnrichedPollutionData>
+*/
 export const enrichPollutionData = async (data: CountryPollutionData): Promise<EnrichedPollutionData> => {
     // get the wikipedia data for each city
     // data.cities = await Promise.all(data.cities.map(async (city) => ({ ...city, description: await getWikipediaData(city.name) })));
@@ -43,6 +53,14 @@ export const enrichPollutionData = async (data: CountryPollutionData): Promise<E
     //return { ...data, cities: cities };
     
 }
+
+/*
+* @description - format pollution data
+* @param data - EnrichedPollutionData - pollution data
+* @param page - number - page number
+* @param limit - number - number of items per page
+* @returns - CountryPollutionDataResult - formatted pollution data
+*/
 export const formatPollutionData = (data: EnrichedPollutionData, page: number, limit: number): CountryPollutionDataResult => {
     // get the pollution data for the page and limit
     const pollutionData = data.cities.slice((page - 1) * limit, page * limit);
